@@ -26,7 +26,11 @@ public class Menu : MonoBehaviour
         {
             goldTxt.text = DataManager.Instance.gold.ToString();
         }
+
+        
     }
+
+    
     public void ExitGame()
     {
         Application.Quit();

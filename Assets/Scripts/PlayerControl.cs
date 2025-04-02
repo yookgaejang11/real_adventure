@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Scripting.APIUpdating;
+using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour
 {
-    
+    public float currenthp = 10;
+    public float maxhp = 10;
+    public float currentAir = 100;
+    public float maxAir = 100;
+    public Slider hp_Slider;
+    public Slider air_Slider;
     public bool isAttack = true;
     public GameObject knife;
     public bool isJump = false;
@@ -26,7 +33,15 @@ public class PlayerControl : MonoBehaviour
         knife.transform.SetParent(mainCamera.transform);
         knife.transform.localPosition = new Vector3(0.3f, -0.2f, 0.5f);
         knife.transform.rotation = Quaternion.identity;
+        if(SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            currenthp = maxhp;
+            currentAir = maxAir;
+        }
+        else if(SceneManager.GetActiveScene().buildIndex >= 1)
+        {
 
+        }
     }
 
     // Update is called once per frame
@@ -40,6 +55,7 @@ public class PlayerControl : MonoBehaviour
 
         if(isAttack && Input.GetKeyDown(KeyCode.Mouse0))
         {
+            isAttack = false;
             StartCoroutine(Attack());
         }
         Rotate();
@@ -48,10 +64,11 @@ public class PlayerControl : MonoBehaviour
 
     IEnumerator Attack()
     {
-      
-
         
-        yield return null;
+        knife.transform.GetChild(0).GetComponent<Animator>().SetTrigger("isAttack");
+        yield return new WaitForSeconds(1);
+        isAttack = true;
+        
     }
     private void FixedUpdate()
     {
