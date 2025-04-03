@@ -5,8 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+
+    public int AirCost = 0;
     private static GameManager instance;
     public bool inGame;
+    public List<GameObject> Items;
     private void Awake()
     {
         if (instance == null)
@@ -17,6 +20,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        DontDestroyOnLoad(this.gameObject);
     }
     void Start()
     {
@@ -32,12 +37,22 @@ public class GameManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(inGame)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
     public static GameManager Instance
