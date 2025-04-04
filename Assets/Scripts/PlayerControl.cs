@@ -62,6 +62,24 @@ public class PlayerControl : MonoBehaviour
         }
         else if(SceneManager.GetActiveScene().buildIndex >= 1)
         {
+            switch (DataManager.Instance.airLv)
+            {
+                case 1:
+                    {
+                        maxAir = 150;
+                    }
+                    break;
+                case 2:
+                    {
+                        maxAir = 200;
+                    }
+                    break;
+                case 3:
+                    {
+                        maxAir = 250;
+                    }
+                    break;
+            }
             currenthp = DataManager.Instance.playerHp;
             currentAir = DataManager.Instance.playerair;
         }

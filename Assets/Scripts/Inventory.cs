@@ -82,10 +82,10 @@ public class Inventory : MonoBehaviour
                 RectTransform SpawnObjRt = SpawnObj.GetComponent<RectTransform>();
                 SpawnObjRt.SetParent(invens[i].GetComponent<RectTransform>());
                 Debug.Log("아이템 추가");
-                SpawnObjRt.anchoredPosition = Vector3.zero;
-                SpawnObjRt.anchorMax = Vector3.one;
-                SpawnObjRt.anchorMin = Vector3.zero;
-                
+                SpawnObjRt.anchoredPosition = Vector3.zero; 
+                SpawnObjRt.offsetMax = Vector3.zero;
+                SpawnObjRt.offsetMin = Vector3.zero;
+                currentWeight += item.GetComponent<Item>().weight;
                 isSelected = true;
             }
             Debug.Log(invens[i].transform.childCount);
@@ -107,6 +107,21 @@ public class Inventory : MonoBehaviour
             inventory.SetActive(false);
             isOpen = false;
             GameManager.Instance.inGame = true;
+        }
+
+        if(isOpen)
+        {
+            weightTxt.text = "소지 중량" + currentWeight + "/" + maxWeight;
+            if(currentWeight > maxWeight)
+            {
+                weightTxt.color = Color.red;
+                GameObject.Find("Player").GetComponent<PlayerControl>().speed = 2.5f;
+            }
+            else
+            {
+                weightTxt.color = Color.black;
+                GameObject.Find("Player").GetComponent<PlayerControl>().speed = 5;
+            }
         }
     }
 
